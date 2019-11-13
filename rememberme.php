@@ -38,10 +38,11 @@ if(!isset($_SESSION['user_id']) && !empty($_COOKIE['rememberme'])){
             $authentificator2 = openssl_random_pseudo_bytes(20);
             
             //store them in a cookie
-            function f1($a, $b){
-                $c= $a .",". bin2hex($b);
-                return $c;
+            function f1($value1, $value2){
+                $answer= $value1 .",". bin2hex($value2);
+                return $answer;
             }
+            
             $cookieValue = f1($authentificator1, $authentificator2);
             setcookie(
             "rememberme", $cookieValue,
@@ -49,9 +50,9 @@ if(!isset($_SESSION['user_id']) && !empty($_COOKIE['rememberme'])){
             );
             
             //                Run query to store them in rememberme table
-            function f2($a){
-                $b = hash('sha256', $a);
-                return $b;
+            function f2($value){
+                $answer = hash('sha256', $value);
+                return $answer;
             }
             
             $f2authentificator2 = f2($authentificator2);

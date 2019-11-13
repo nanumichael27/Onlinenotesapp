@@ -51,36 +51,38 @@ include('connection.php');
 
             exit;
             }
-            //else
-            //Store them in three variables
+
+
             $email = $_GET['email'];
             $newemail = $_GET['newemail'];
             $key = $_GET['key'];
-            //Prepare variables for the query
+
+            
+            
             $email = mysqli_real_escape_string($link, $email);
             $newemail = mysqli_real_escape_string($link, $newemail);
-            
             $key = mysqli_real_escape_string($link, $key);
-            //Run query: set activation field to "acivated" for the provided email
+            
+            activateUser();
+            
+            function activateUser(){
+                $sql = "UPDATE users SET email='$newemail', activation2='0' WHERE (email='$email' AND activation2='$key') LIMIT 1";
+                $result = mysqli_query($link, $sql);
+                //If query is successful, show success message and invite user to login
+                if(mysqli_affected_rows($link) == 1){
+                    session_destroy();
+                    setcookie('rememberme', "", time()-3600);
 
-            $sql = "UPDATE users SET email='$newemail', activation2='0' WHERE (email='$email' AND activation2='$key') LIMIT 1";
-            //I earlier forgot to store this in a result leading to errors in the program
-            $result = mysqli_query($link, $sql);
-            //If query is successful, show success message and invite user to login
-            if(mysqli_affected_rows($link) == 1){
-                session_destroy();
-                setcookie('rememberme', "", time()-3600);
-
-            echo "<div class='alert alert-success'> Your account has been successfully updated!<div>";
-            echo "<a href='index.php' type='button' class='btn btn-lg btn-success'>Log in?</a>";
-            }else{
-            //else
-            //show error message
-            echo "<div class='alert alert-danger'>Sorry your email could not be updated please try again later.<div>";
-                
-
+                echo "<div class='alert alert-success'> Your account has been successfully updated!<div>";
+                echo "<a href='index.php' type='button' class='btn btn-lg btn-success'>Log in?</a>";
+                }else{
+                //else
+                //show error message
+                echo "<div class='alert alert-danger'>Sorry your email could not be updated please try again later.<div>";
+                }
+            
             }
-
+            
             ?>
             
         </div>

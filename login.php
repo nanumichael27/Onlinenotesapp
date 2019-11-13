@@ -4,18 +4,13 @@
 session_start();
 //Connect to the database
 include ("connection.php");
-//Check user inputs
-//    Define error messages
 $missingEmail = '<p><strong>Please enter your email</strong></p>';
 $missingPassword = '<p><strong>Please enter your password</strong></p>';
 $errors = "";
 
-//    Get email and password
-//    Store errors in errors variable
 if(empty($_POST["loginemail"])){
     $errors .= $missingEmail;
 }else{
-    //filter the email
     $email = filter_var($_POST["loginemail"], FILTER_SANITIZE_EMAIL);
   
 }
@@ -23,27 +18,36 @@ if(empty($_POST["loginemail"])){
 if(empty($_POST["loginpassword"])){
     $errors .= $missingPassword;
 }else{
-    //filter the email
     $password = filter_var($_POST["loginpassword"], FILTER_SANITIZE_STRING);
-  
 }
 
 
-//    If there are any errors
+
+
+
+
+
+
+
+
 if($errors){
     //        Print error message
     $resultMessage = '<div class="alert alert-danger"><a class="close" data-dismiss="alert">&times;</a>' . $errors . '</div>';
     echo $resultMessage;
     exit;
-}else{
+}
     
+
+
+
     
-    //    else: No errors
+
 //        Prepare variables for the query
     $email = mysqli_real_escape_string($link, $email);
-
     $password = mysqli_real_escape_string($link, $password);
     $password = hash('sha256', $password);
+
+
     
 //        Run query: Check combination of email & password exists
     $sql = "SELECT * FROM users WHERE (email='$email' AND password='$password' AND activation='activated')";
@@ -58,16 +62,13 @@ if($errors){
         echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>&times;</a><strong> Wrong email or password</strong></div>";
     }else{
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        
-        
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['username'] = $row['username'];
         $_SESSION['email'] = $row['email'];
         
+
         if(empty($_POST['rememberme'])){
-            //log the user in: Set sssion variables
-            //Ifremember me is not checked
-                //print  "success"
+        
             echo"success";
             
         }else{
@@ -123,7 +124,7 @@ if($errors){
 
     
     
-}
+
 
 
 ?>

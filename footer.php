@@ -2,7 +2,7 @@
    
        <div class="container">
            <p>
-               nanotek.tk Copyright &copy; 2013-<?php
+               nanotek.tk Copyright &copy; 2017-<?php
                echo date("Y");
                ?> 
            </p>

@@ -4,12 +4,9 @@ session_start();
 
 //establish a connection with the server
 include ("connection.php");
-
-//logout
 include("logout.php");
-
-//remember me
 include ("rememberme.php");
+
 
 ?>
 

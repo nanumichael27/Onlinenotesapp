@@ -46,24 +46,18 @@ include('connection.php');
             
             //If email or activation key is missing show an error
             if(!isset($_GET['email']) || !isset($_GET['key'])){
-
             echo "<div class='alert alert-warning'>There was an error activating your account, please click on the activation link you recieved in the email. <div>";
-
             exit;
             }
-            //else
-            //Store them in two variables
+
+            
+            
             $email = $_GET['email'];
             $key = $_GET['key'];
-            //Prepare variables for the query
             $email = mysqli_real_escape_string($link, $email);
             $key = mysqli_real_escape_string($link, $key);
-            //Run query: set activation field to "acivated" for the provided email
-
             $sql = "UPDATE users SET activation='activated' WHERE (email='$email' AND activation='$key') LIMIT 1";
-            //I earlier forgot to store this in a result leading to errors int the program
             $result = mysqli_query($link, $sql);
-            //If query is successful, show success message and invite user to login
             if(mysqli_affected_rows($link) == 1){
 
             echo "<div class='alert alert-success'>Congratulations!!! Your account has been activated!<div>";
@@ -72,10 +66,11 @@ include('connection.php');
             //else
             //show error message
             echo "<div class='alert alert-danger'>Sorry your account could not be activated please try again later.<div>";
-                
 
             }
 
+            
+            
             ?>
             
         </div>
